@@ -1,13 +1,9 @@
+from django.contrib import admin
 from django.urls import path, include
-from rest_framework.routers import DefaultRouter 
-from .views import ComplaintViewSet,DepartmentViewSet,StatusViewSet,UserViewSet
+from complaints.views import CustomAuthToken
 
-router = DefaultRouter()
-router.register(r'complaints',ComplaintViewSet,basename='complaint')
-router.register(r'departments',DepartmentViewSet)
-router.register(r'statuses',StatusViewSet)
-router.register(r'users', UserViewSet)
-
-urlpatterns=[
-    path('', include(router.urls))
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('api/', include('complaints.urls')), 
+    path('api/login/', CustomAuthToken.as_view()),
 ]
