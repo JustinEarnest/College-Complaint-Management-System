@@ -9,9 +9,6 @@ db.sqlite3
 .env.*
 *.log
 
-# Virtual Environment
-venv/
-env/
 
 # Django stuff
 staticfiles/
