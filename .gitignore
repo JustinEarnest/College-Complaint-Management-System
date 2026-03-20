@@ -8,6 +8,7 @@ db.sqlite3
 .env
 .env.*
 *.log
+venv/
 
 
 # Django stuff
