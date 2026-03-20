@@ -9,6 +9,7 @@ baseURL: "http://127.0.0.1:8000/api/",
 
 
 API.interceptors.request.use((req) => {
+<<<<<<< HEAD
 
 const token = localStorage.getItem("token");
 
@@ -20,10 +21,18 @@ req.headers.Authorization = `Bearer ${token}`;
 
 return req;
 
+=======
+  const token = localStorage.getItem("token");
+  if (token) {
+    req.headers.Authorization = `Bearer ${token}`;
+  }
+  return req;
+>>>>>>> 599eeff (All work done)
 });
 
 
 API.interceptors.response.use(
+<<<<<<< HEAD
 
 (response) => response,
 
@@ -53,6 +62,22 @@ return Promise.reject(error);
 
 }
 
+=======
+  (response) => response,
+  (error) => {
+    // If we're not on the login page and get a 401/403, clear tokens and redirect
+    if (
+      error.response &&
+      (error.response.status === 401 || error.response.status === 403) &&
+      !error.config.url.endsWith("login/")
+    ) {
+      localStorage.removeItem("token");
+      localStorage.removeItem("role");
+      window.location.href = "/";
+    }
+    return Promise.reject(error);
+  }
+>>>>>>> 599eeff (All work done)
 );
 
 

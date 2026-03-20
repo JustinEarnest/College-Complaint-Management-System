@@ -12,7 +12,7 @@ class ComplaintViewSet(viewsets.ModelViewSet):
         user = self.request.user
 
         # Admin can see all complaints
-        if user.is_staff:
+        if getattr(user, 'role', '') == 'admin' or user.is_staff:
             return Complaint.objects.all()
 
         # Student sees only their complaints
@@ -29,7 +29,7 @@ class ComplaintViewSet(viewsets.ModelViewSet):
         # But for this feature, we assume a student is submitting it.
         try:
             student = Student.objects.get(email=user.email)
-            serializer.save(student=student)
+            serializer.save(student=student, department=student.department)
         except Student.DoesNotExist:
             raise exceptions.PermissionDenied("You must be a registered student to submit a complaint.")
 
