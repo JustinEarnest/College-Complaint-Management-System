@@ -173,7 +173,7 @@ function StudentDashboard() {
         <div className="sidebar-footer">
           <button id="switch-role" className="sidebar-nav-item" onClick={handleSwitchRole}>
             <IconLogout />
-            <span>Switch Role</span>
+            <span>Logout</span>
           </button>
         </div>
       </aside>

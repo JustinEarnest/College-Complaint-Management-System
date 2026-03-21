@@ -71,20 +71,19 @@ function LoginPage() {
           <form onSubmit={handleLogin}>
             {/* Email Field */}
             <div className="mb-3">
-              <label className="form-label">Email</label>
+              <label className="form-label">Email & Username</label>
               <div className="input-group">
                 <span className="input-icon">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
+                  <svg 
+                    xmlns="http://www.w3.org/2000/svg" 
                     fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth={1.5}
+                    strokeWidth={1.0}
                     stroke="currentColor"
+                    class="bi bi-person" 
+                    viewBox="0 0 16 16"
                   >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"
+                    <path 
+                    d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z"
                     />
                   </svg>
                 </span>
@@ -92,7 +91,7 @@ function LoginPage() {
                   id="login-email"
                   type="text"
                   className="form-control"
-                  placeholder="your@college.edu"
+                  placeholder="your@college.edu & Username"
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
                   required
@@ -141,19 +140,6 @@ function LoginPage() {
               {loading ? "Signing in..." : "Sign In"}
             </button>
           </form>
-        </div>
-
-        {/* Demo Credentials */}
-        <div className="demo-credentials">
-          <div className="demo-credentials-title">Demo Credentials</div>
-          <p>
-            <strong>Admin:</strong> admin@college.edu /{" "}
-            <span>admin123</span>
-          </p>
-          <p>
-            <strong>Student:</strong> rahul@college.edu /{" "}
-            <span>rahul123</span>
-          </p>
         </div>
       </div>
     </div>

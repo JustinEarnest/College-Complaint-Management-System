@@ -154,7 +154,7 @@ function AdminDashboard() {
                 d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9"
               />
             </svg>
-            <span>Switch Role</span>
+            <span>Logout</span>
           </button>
         </div>
       </aside>
@@ -207,29 +207,41 @@ function AdminDashboard() {
 
 function DescriptionModal({ complaint, onClose }) {
   return (
-    <div className="modal-overlay" onClick={onClose}>
-      <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-        <div className="modal-header">
-          <h3>Complaint Description</h3>
-          <button className="close-btn" onClick={onClose}>
-            &times;
-          </button>
-        </div>
-        <div className="modal-body">
-          <div className="description-item">
-            <strong>Subject:</strong>
-            <div className="description-text subject-text">{complaint.subject}</div>
+    /* 1. Use 'show' and 'd-block' to make it visible manually if not using Bootstrap's JS */
+    <div className="modal show d-block" tabIndex="-1" onClick={onClose} style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}>
+      
+      {/* 2. Add 'modal-dialog-centered' here */}
+      <div className="modal-dialog modal-dialog-centered" onClick={(e) => e.stopPropagation()}>
+        
+        <div className="modal-content">
+          <div className="modal-header">
+            <h5 className="modal-title">Complaint Description</h5>
+            <button 
+              type="button" 
+              className="btn-close" 
+              aria-label="Close" 
+              onClick={onClose}
+            ></button>
           </div>
-          <div className="description-item">
-            <strong>Description:</strong>
-            <div className="description-text">{complaint.description}</div>
+
+          <div className="modal-body">
+            <div className="mb-3">
+              <strong>Subject:</strong>
+              <div className="p-2 bg-light border rounded">{complaint.subject}</div>
+            </div>
+            <div>
+              <strong>Description:</strong>
+              <div className="p-2 bg-light border rounded">{complaint.description}</div>
+            </div>
+          </div>
+
+          <div className="modal-footer">
+            <button type="button" className="btn btn-primary" onClick={onClose}>
+              Close
+            </button>
           </div>
         </div>
-        <div className="modal-footer">
-          <button className="primary-btn" onClick={onClose}>
-            Close
-          </button>
-        </div>
+
       </div>
     </div>
   );

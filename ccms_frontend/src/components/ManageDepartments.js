@@ -5,282 +5,282 @@ import API from "../services/api";
 
 function ManageDepartments() {
 
-const [departments, setDepartments] = useState([]);
+    const [departments, setDepartments] = useState([]);
 
-const [newDeptName, setNewDeptName] = useState("");
+    const [newDeptName, setNewDeptName] = useState("");
 
-const [editingDept, setEditingDept] = useState(null);
+    const [editingDept, setEditingDept] = useState(null);
 
 
-useEffect(() => {
+    useEffect(() => {
 
-loadDepartments();
+        loadDepartments();
 
-}, []);
+    }, []);
 
 
-const loadDepartments = async () => {
+    const loadDepartments = async () => {
 
-try {
+        try {
 
-const res = await API.get("departments/");
+            const res = await API.get("departments/");
 
-setDepartments(res.data);
+            setDepartments(res.data);
 
-} catch (error) {
+        } catch (error) {
 
-console.error("Error loading departments:", error);
+            console.error("Error loading departments:", error);
 
-}
+        }
 
-};
+    };
 
 
-const handleAddDepartment = async (e) => {
+    const handleAddDepartment = async (e) => {
 
-e.preventDefault();
+        e.preventDefault();
 
-if (!newDeptName.trim()) return;
+        if (!newDeptName.trim()) return;
 
-try {
+        try {
 
-await API.post("departments/", { dept_name: newDeptName });
+            await API.post("departments/", { dept_name: newDeptName });
 
-setNewDeptName("");
+            setNewDeptName("");
 
-loadDepartments();
+            loadDepartments();
 
-} catch (error) {
+        } catch (error) {
 
-console.error("Error adding department:", error);
+            console.error("Error adding department:", error);
 
-}
+        }
 
-};
+    };
 
 
-const handleDeleteDepartment = async (id) => {
+    const handleDeleteDepartment = async (id) => {
 
-if (window.confirm("Are you sure you want to delete this department?")) {
+        if (window.confirm("Are you sure you want to delete this department?")) {
 
-try {
+            try {
 
-await API.delete(`departments/${id}/`);
+                await API.delete(`departments/${id}/`);
 
-loadDepartments();
+                loadDepartments();
 
-} catch (error) {
+            } catch (error) {
 
-console.error("Error deleting department:", error);
+                console.error("Error deleting department:", error);
 
-}
+            }
 
-}
+        }
 
-};
+    };
 
 
-const handleEditDepartment = async (e) => {
+    const handleEditDepartment = async (e) => {
 
-e.preventDefault();
+        e.preventDefault();
 
-try {
+        try {
 
-await API.put(`departments/${editingDept.dept_id}/`, editingDept);
+            await API.put(`departments/${editingDept.dept_id}/`, editingDept);
 
-setEditingDept(null);
+            setEditingDept(null);
 
-loadDepartments();
+            loadDepartments();
 
-} catch (error) {
+        } catch (error) {
 
-console.error("Error editing department:", error);
+            console.error("Error editing department:", error);
 
-}
+        }
 
-};
+    };
 
 
-return (
+    return (
 
-<div>
+        <div>
 
-<h3 className="mb-4">Manage Departments</h3>
+            <h3 className="mb-4">Manage Departments</h3>
 
 
-<div className="card mb-4">
+            <div className="card mb-4">
 
-<div className="card-body">
+                <div className="card-body">
 
-<h5 className="card-title">Add New Department</h5>
+                    <h5 className="card-title">Add New Department</h5>
 
-<form className="d-flex" onSubmit={handleAddDepartment}>
+                    <form className="d-flex" onSubmit={handleAddDepartment}>
 
-<input
+                        <input
 
-type="text"
+                            type="text"
 
-className="form-control me-2"
+                            className="form-control me-2"
 
-placeholder="Department Name"
+                            placeholder="Department Name"
 
-value={newDeptName}
+                            value={newDeptName}
 
-onChange={(e) => setNewDeptName(e.target.value)}
+                            onChange={(e) => setNewDeptName(e.target.value)}
 
-required
+                            required
 
-/>
+                        />
 
-<button type="submit" className="btn btn-primary">
+                        <button type="submit" className="btn btn-primary">
 
-Add
+                            Add
 
-</button>
+                        </button>
 
-</form>
+                    </form>
 
-</div>
+                </div>
 
-</div>
+            </div>
 
 
-{editingDept && (
+            {editingDept && (
 
-<div className="card mb-4">
+                <div className="card mb-4">
 
-<div className="card-body">
+                    <div className="card-body">
 
-<h5 className="card-title">Edit Department</h5>
+                        <h5 className="card-title">Edit Department</h5>
 
-<form className="d-flex" onSubmit={handleEditDepartment}>
+                        <form className="d-flex" onSubmit={handleEditDepartment}>
 
-<input
+                            <input
 
-type="text"
+                                type="text"
 
-className="form-control me-2"
+                                className="form-control me-2"
 
-value={editingDept.dept_name}
+                                value={editingDept.dept_name}
 
-onChange={(e) =>
+                                onChange={(e) =>
 
-setEditingDept({ ...editingDept, dept_name: e.target.value })
+                                    setEditingDept({ ...editingDept, dept_name: e.target.value })
 
-}
+                                }
 
-required
+                                required
 
-/>
+                            />
 
-<button type="submit" className="btn btn-success me-2">
+                            <button type="submit" className="btn btn-success me-2">
 
-Save
+                                Save
 
-</button>
+                            </button>
 
-<button
+                            <button
 
-type="button"
+                                type="button"
 
-className="btn btn-secondary"
+                                className="btn btn-secondary"
 
-onClick={() => setEditingDept(null)}
+                                onClick={() => setEditingDept(null)}
 
->
+                            >
 
-Cancel
+                                Cancel
 
-</button>
+                            </button>
 
-</form>
+                        </form>
 
-</div>
+                    </div>
 
-</div>
+                </div>
 
-)}
+            )}
 
 
-<table className="table">
+            <table className="table">
 
-<thead>
+                <thead>
 
-<tr>
+                    <tr>
 
-<th>ID</th>
+                        <th>ID</th>
 
-<th>Department Name</th>
+                        <th>Department Name</th>
 
-<th>Actions</th>
+                        <th>Actions</th>
 
-</tr>
+                    </tr>
 
-</thead>
+                </thead>
 
-<tbody>
+                <tbody>
 
-{departments.map((dept) => (
+                    {departments.map((dept) => (
 
-<tr key={dept.dept_id}>
+                        <tr key={dept.dept_id}>
 
-<td>{dept.dept_id}</td>
+                            <td>{dept.dept_id}</td>
 
-<td>{dept.dept_name}</td>
+                            <td>{dept.dept_name}</td>
 
-<td>
+                            <td>
 
-<button
+                                <button
 
-className="btn btn-sm btn-warning me-2"
+                                    className="btn btn-sm btn-warning me-2"
 
-onClick={() => setEditingDept(dept)}
+                                    onClick={() => setEditingDept(dept)}
 
->
+                                >
 
-Edit
+                                    Edit
 
-</button>
+                                </button>
 
-<button
+                                <button
 
-className="btn btn-sm btn-danger"
+                                    className="btn btn-sm btn-danger"
 
-onClick={() => handleDeleteDepartment(dept.dept_id)}
+                                    onClick={() => handleDeleteDepartment(dept.dept_id)}
 
->
+                                >
 
-Delete
+                                    Delete
 
-</button>
+                                </button>
 
-</td>
+                            </td>
 
-</tr>
+                        </tr>
 
-))}
+                    ))}
 
-{departments.length === 0 && (
+                    {departments.length === 0 && (
 
-<tr>
+                        <tr>
 
-<td colSpan="3" className="text-center">
+                            <td colSpan="3" className="text-center">
 
-No departments found.
+                                No departments found.
 
-</td>
+                            </td>
 
-</tr>
+                        </tr>
 
-)}
+                    )}
 
-</tbody>
+                </tbody>
 
-</table>
+            </table>
 
-</div>
+        </div>
 
-);
+    );
 
 }
 

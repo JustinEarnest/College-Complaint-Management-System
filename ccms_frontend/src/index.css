@@ -912,10 +912,6 @@ a { text-decoration: none; }
   padding: 12px;
 }
 
-/* ========================================
-   MODAL & ACTION BUTTONS
-   ======================================== */
-
 .action-cell {
   display: flex;
   align-items: center;
@@ -942,44 +938,6 @@ a { text-decoration: none; }
   transform: translateY(-2px);
 }
 
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(26, 31, 55, 0.6);
-  backdrop-filter: blur(4px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
-  animation: fadeIn 0.3s ease-out;
-}
-
-.modal-content {
-  background: var(--bg-white);
-  border-radius: var(--border-radius);
-  width: 100%;
-  max-width: 500px;
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-  animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-  overflow: hidden;
-}
-
-.modal-header {
-  padding: 20px 24px;
-  border-bottom: 1px solid var(--border-color);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.modal-header h3 {
-  font-size: 18px;
-  font-weight: 700;
-  color: var(--text-primary);
-}
 
 .close-btn {
   background: none;
@@ -1007,12 +965,13 @@ a { text-decoration: none; }
   display: block;
   font-size: 13px;
   text-transform: uppercase;
-  color: var(--text-secondary);
+  color: var(--text-primary);
+  background-color: var(--bg-white);
   margin-bottom: 4px;
 }
 
 .description-text {
-  background: var(--bg-main);
+  background: var(--bg-white);
   padding: 16px;
   border: 1.5px solid var(--border-color);
   border-radius: var(--border-radius-sm);
@@ -1028,7 +987,7 @@ a { text-decoration: none; }
 .description-text.subject-text {
   font-weight: 600;
   color: var(--text-primary);
-  background: var(--primary-light);
+  background: var(--bg-white);
   border-color: rgba(67, 97, 238, 0.2);
   padding: 12px 16px;
 }
@@ -1041,6 +1000,7 @@ a { text-decoration: none; }
 .modal-footer {
   padding: 16px 24px;
   border-top: 1px solid var(--border-color);
+  background-color: var(--bg-white);
   display: flex;
   justify-content: flex-end;
 }

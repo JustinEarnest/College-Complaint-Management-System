@@ -5,605 +5,605 @@ import API from "../services/api";
 
 function ManageStudents() {
 
-const [students, setStudents] = useState([]);
+    const [students, setStudents] = useState([]);
 
-const [departments, setDepartments] = useState([]);
+    const [departments, setDepartments] = useState([]);
 
-const [newStudent, setNewStudent] = useState({
+    const [newStudent, setNewStudent] = useState({
 
-username: "",
+        username: "",
 
-email: "",
+        email: "",
 
-password: "",
+        password: "",
 
-phone: "",
+        phone: "",
 
-department: "",
+        department: "",
 
-});
+    });
 
-const [editingStudent, setEditingStudent] = useState(null);
+    const [editingStudent, setEditingStudent] = useState(null);
 
-const [error, setError] = useState(null);
+    const [error, setError] = useState(null);
 
 
-useEffect(() => {
+    useEffect(() => {
 
-loadStudents();
+        loadStudents();
 
-loadDepartments();
+        loadDepartments();
 
-}, []);
+    }, []);
 
 
-const loadStudents = async () => {
+    const loadStudents = async () => {
 
-try {
+        try {
 
-const res = await API.get("students/");
+            const res = await API.get("students/");
 
-setStudents(res.data);
+            setStudents(res.data);
 
-} catch (err) {
+        } catch (err) {
 
-console.error("Error loading students:", err);
+            console.error("Error loading students:", err);
 
-}
+        }
 
-};
+    };
 
 
-const loadDepartments = async () => {
+    const loadDepartments = async () => {
 
-try {
+        try {
 
-const res = await API.get("departments/");
+            const res = await API.get("departments/");
 
-setDepartments(res.data);
+            setDepartments(res.data);
 
-} catch (err) {
+        } catch (err) {
 
-console.error("Error loading departments:", err);
+            console.error("Error loading departments:", err);
 
-}
+        }
 
-};
+    };
 
 
-const handleAddStudent = async (e) => {
+    const handleAddStudent = async (e) => {
 
-e.preventDefault();
+        e.preventDefault();
 
-setError(null);
+        setError(null);
 
-try {
+        try {
 
-// Create user via register endpoint
+            // Create user via register endpoint
 
-await API.post("register/", newStudent);
+            await API.post("register/", newStudent);
 
-setNewStudent({
+            setNewStudent({
 
-username: "",
+                username: "",
 
-email: "",
+                email: "",
 
-password: "",
+                password: "",
 
-phone: "",
+                phone: "",
 
-department: "",
+                department: "",
 
-});
+            });
 
-loadStudents();
+            loadStudents();
 
-} catch (err) {
+        } catch (err) {
 
-console.error("Error adding student:", err);
+            console.error("Error adding student:", err);
 
-setError(err.response?.data?.detail || "Failed to add student. Ensure username/email is unique.");
+            setError(err.response?.data?.detail || "Failed to add student. Ensure username/email is unique.");
 
-}
+        }
 
-};
+    };
 
 
-const handleDeleteStudent = async (id) => {
+    const handleDeleteStudent = async (id) => {
 
-if (window.confirm("Are you sure you want to delete this student?")) {
+        if (window.confirm("Are you sure you want to delete this student?")) {
 
-try {
+            try {
 
-await API.delete(`students/${id}/`);
+                await API.delete(`students/${id}/`);
 
-loadStudents();
+                loadStudents();
 
-} catch (err) {
+            } catch (err) {
 
-console.error("Error deleting student:", err);
+                console.error("Error deleting student:", err);
 
-setError("Failed to delete student.");
+                setError("Failed to delete student.");
 
-}
+            }
 
-}
+        }
 
-};
+    };
 
 
-const handleEditStudent = async (e) => {
+    const handleEditStudent = async (e) => {
 
-e.preventDefault();
+        e.preventDefault();
 
-setError(null);
+        setError(null);
 
-try {
+        try {
 
-await API.put(`students/${editingStudent.student_id}/`, {
+            await API.put(`students/${editingStudent.student_id}/`, {
 
-name: editingStudent.name,
+                name: editingStudent.name,
 
-email: editingStudent.email,
+                email: editingStudent.email,
 
-phone: editingStudent.phone,
+                phone: editingStudent.phone,
 
-department: editingStudent.department,
+                department: editingStudent.department,
 
-});
+            });
 
-setEditingStudent(null);
+            setEditingStudent(null);
 
-loadStudents();
+            loadStudents();
 
-} catch (err) {
+        } catch (err) {
 
-console.error("Error editing student:", err);
+            console.error("Error editing student:", err);
 
-setError(err.response?.data?.detail || "Failed to update student.");
+            setError(err.response?.data?.detail || "Failed to update student.");
 
-}
+        }
 
-};
+    };
 
 
-const getDepartmentName = (id) => {
+    const getDepartmentName = (id) => {
 
-const dept = departments.find((d) => d.dept_id === id);
+        const dept = departments.find((d) => d.dept_id === id);
 
-return dept ? dept.dept_name : "Unknown";
+        return dept ? dept.dept_name : "Unknown";
 
-};
+    };
 
 
-return (
+    return (
 
-<div>
+        <div>
 
-<h3 className="mb-4">Manage Students</h3>
+            <h3 className="mb-4">Manage Students</h3>
 
 
-{error && <div className="alert alert-danger">{error}</div>}
+            {error && <div className="alert alert-danger">{error}</div>}
 
 
-<div className="card mb-4">
+            <div className="card mb-4">
 
-<div className="card-body">
+                <div className="card-body">
 
-<h5 className="card-title">Add New Student</h5>
+                    <h5 className="card-title">Add New Student</h5>
 
-<form onSubmit={handleAddStudent}>
+                    <form onSubmit={handleAddStudent}>
 
-<div className="row mb-3">
+                        <div className="row mb-3">
 
-<div className="col">
+                            <div className="col">
 
-<input
+                                <input
 
-type="text"
+                                    type="text"
 
-className="form-control"
+                                    className="form-control"
 
-placeholder="Username"
+                                    placeholder="Username"
 
-value={newStudent.username}
+                                    value={newStudent.username}
 
-onChange={(e) =>
+                                    onChange={(e) =>
 
-setNewStudent({ ...newStudent, username: e.target.value })
+                                        setNewStudent({ ...newStudent, username: e.target.value })
 
-}
+                                    }
 
-required
+                                    required
 
-/>
+                                />
 
-</div>
+                            </div>
 
-<div className="col">
+                            <div className="col">
 
-<input
+                                <input
 
-type="email"
+                                    type="email"
 
-className="form-control"
+                                    className="form-control"
 
-placeholder="Email"
+                                    placeholder="Email"
 
-value={newStudent.email}
+                                    value={newStudent.email}
 
-onChange={(e) =>
+                                    onChange={(e) =>
 
-setNewStudent({ ...newStudent, email: e.target.value })
+                                        setNewStudent({ ...newStudent, email: e.target.value })
 
-}
+                                    }
 
-required
+                                    required
 
-/>
+                                />
 
-</div>
+                            </div>
 
-</div>
+                        </div>
 
-<div className="row mb-3">
+                        <div className="row mb-3">
 
-<div className="col">
+                            <div className="col">
 
-<input
+                                <input
 
-type="password"
+                                    type="password"
 
-className="form-control"
+                                    className="form-control"
 
-placeholder="Password"
+                                    placeholder="Password"
 
-value={newStudent.password}
+                                    value={newStudent.password}
 
-onChange={(e) =>
+                                    onChange={(e) =>
 
-setNewStudent({ ...newStudent, password: e.target.value })
+                                        setNewStudent({ ...newStudent, password: e.target.value })
 
-}
+                                    }
 
-required
+                                    required
 
-/>
+                                />
 
-</div>
+                            </div>
 
-<div className="col">
+                            <div className="col">
 
-<input
+                                <input
 
-type="text"
+                                    type="text"
 
-className="form-control"
+                                    className="form-control"
 
-placeholder="Phone"
+                                    placeholder="Phone"
 
-value={newStudent.phone}
+                                    value={newStudent.phone}
 
-onChange={(e) =>
+                                    onChange={(e) =>
 
-setNewStudent({ ...newStudent, phone: e.target.value })
+                                        setNewStudent({ ...newStudent, phone: e.target.value })
 
-}
+                                    }
 
-required
+                                    required
 
-/>
+                                />
 
-</div>
+                            </div>
 
-</div>
+                        </div>
 
-<div className="row mb-3">
+                        <div className="row mb-3">
 
-<div className="col">
+                            <div className="col">
 
-<select
+                                <select
 
-className="form-select"
+                                    className="form-select"
 
-value={newStudent.department}
+                                    value={newStudent.department}
 
-onChange={(e) =>
+                                    onChange={(e) =>
 
-setNewStudent({ ...newStudent, department: e.target.value })
+                                        setNewStudent({ ...newStudent, department: e.target.value })
 
-}
+                                    }
 
-required
+                                    required
 
->
+                                >
 
-<option value="">Select Department</option>
+                                    <option value="">Select Department</option>
 
-{departments.map((dept) => (
+                                    {departments.map((dept) => (
 
-<option key={dept.dept_id} value={dept.dept_id}>
+                                        <option key={dept.dept_id} value={dept.dept_id}>
 
-{dept.dept_name}
+                                            {dept.dept_name}
 
-</option>
+                                        </option>
 
-))}
+                                    ))}
 
-</select>
+                                </select>
 
-</div>
+                            </div>
 
-<div className="col d-flex align-items-end">
+                            <div className="col d-flex align-items-end">
 
-<button type="submit" className="btn btn-primary w-100">
+                                <button type="submit" className="btn btn-primary w-100">
 
-Add Student
+                                    Add Student
 
-</button>
+                                </button>
 
-</div>
+                            </div>
 
-</div>
+                        </div>
 
-</form>
+                    </form>
 
-</div>
+                </div>
 
-</div>
+            </div>
 
 
-{editingStudent && (
+            {editingStudent && (
 
-<div className="card mb-4">
+                <div className="card mb-4">
 
-<div className="card-body">
+                    <div className="card-body">
 
-<h5 className="card-title">Edit Student</h5>
+                        <h5 className="card-title">Edit Student</h5>
 
-<form onSubmit={handleEditStudent}>
+                        <form onSubmit={handleEditStudent}>
 
-<div className="row mb-3">
+                            <div className="row mb-3">
 
-<div className="col">
+                                <div className="col">
 
-<input
+                                    <input
 
-type="text"
+                                        type="text"
 
-className="form-control"
+                                        className="form-control"
 
-placeholder="Name"
+                                        placeholder="Name"
 
-value={editingStudent.name}
+                                        value={editingStudent.name}
 
-onChange={(e) =>
+                                        onChange={(e) =>
 
-setEditingStudent({ ...editingStudent, name: e.target.value })
+                                            setEditingStudent({ ...editingStudent, name: e.target.value })
 
-}
+                                        }
 
-required
+                                        required
 
-/>
+                                    />
 
-</div>
+                                </div>
 
-<div className="col">
+                                <div className="col">
 
-<input
+                                    <input
 
-type="email"
+                                        type="email"
 
-className="form-control"
+                                        className="form-control"
 
-placeholder="Email"
+                                        placeholder="Email"
 
-value={editingStudent.email}
+                                        value={editingStudent.email}
 
-onChange={(e) =>
+                                        onChange={(e) =>
 
-setEditingStudent({ ...editingStudent, email: e.target.value })
+                                            setEditingStudent({ ...editingStudent, email: e.target.value })
 
-}
+                                        }
 
-required
+                                        required
 
-/>
+                                    />
 
-</div>
+                                </div>
 
-</div>
+                            </div>
 
-<div className="row mb-3">
+                            <div className="row mb-3">
 
-<div className="col">
+                                <div className="col">
 
-<input
+                                    <input
 
-type="text"
+                                        type="text"
 
-className="form-control"
+                                        className="form-control"
 
-placeholder="Phone"
+                                        placeholder="Phone"
 
-value={editingStudent.phone}
+                                        value={editingStudent.phone}
 
-onChange={(e) =>
+                                        onChange={(e) =>
 
-setEditingStudent({ ...editingStudent, phone: e.target.value })
+                                            setEditingStudent({ ...editingStudent, phone: e.target.value })
 
-}
+                                        }
 
-required
+                                        required
 
-/>
+                                    />
 
-</div>
+                                </div>
 
-<div className="col">
+                                <div className="col">
 
-<select
+                                    <select
 
-className="form-select"
+                                        className="form-select"
 
-value={editingStudent.department}
+                                        value={editingStudent.department}
 
-onChange={(e) =>
+                                        onChange={(e) =>
 
-setEditingStudent({
+                                            setEditingStudent({
 
-...editingStudent,
+                                                ...editingStudent,
 
-department: e.target.value,
+                                                department: e.target.value,
 
-})
+                                            })
 
-}
+                                        }
 
-required
+                                        required
 
->
+                                    >
 
-<option value="">Select Department</option>
+                                        <option value="">Select Department</option>
 
-{departments.map((dept) => (
+                                        {departments.map((dept) => (
 
-<option key={dept.dept_id} value={dept.dept_id}>
+                                            <option key={dept.dept_id} value={dept.dept_id}>
 
-{dept.dept_name}
+                                                {dept.dept_name}
 
-</option>
+                                            </option>
 
-))}
+                                        ))}
 
-</select>
+                                    </select>
 
-</div>
+                                </div>
 
-</div>
+                            </div>
 
-<button type="submit" className="btn btn-success me-2">
+                            <button type="submit" className="btn btn-success me-2">
 
-Save
+                                Save
 
-</button>
+                            </button>
 
-<button
+                            <button
 
-type="button"
+                                type="button"
 
-className="btn btn-secondary"
+                                className="btn btn-secondary"
 
-onClick={() => setEditingStudent(null)}
+                                onClick={() => setEditingStudent(null)}
 
->
+                            >
 
-Cancel
+                                Cancel
 
-</button>
+                            </button>
 
-</form>
+                        </form>
 
-</div>
+                    </div>
 
-</div>
+                </div>
 
-)}
+            )}
 
 
-<table className="table">
+            <table className="table">
 
-<thead>
+                <thead>
 
-<tr>
+                    <tr>
 
-<th>ID</th>
+                        <th>ID</th>
 
-<th>Name</th>
+                        <th>Name</th>
 
-<th>Email</th>
+                        <th>Email</th>
 
-<th>Phone</th>
+                        <th>Phone</th>
 
-<th>Department</th>
+                        <th>Department</th>
 
-<th>Actions</th>
+                        <th>Actions</th>
 
-</tr>
+                    </tr>
 
-</thead>
+                </thead>
 
-<tbody>
+                <tbody>
 
-{students.map((student) => (
+                    {students.map((student) => (
 
-<tr key={student.student_id}>
+                        <tr key={student.student_id}>
 
-<td>{student.student_id}</td>
+                            <td>{student.student_id}</td>
 
-<td>{student.name}</td>
+                            <td>{student.name}</td>
 
-<td>{student.email}</td>
+                            <td>{student.email}</td>
 
-<td>{student.phone}</td>
+                            <td>{student.phone}</td>
 
-<td>{getDepartmentName(student.department)}</td>
+                            <td>{getDepartmentName(student.department)}</td>
 
-<td>
+                            <td>
 
-<button
+                                <button
 
-className="btn btn-sm btn-warning me-2"
+                                    className="btn btn-sm btn-warning me-2"
 
-onClick={() => setEditingStudent(student)}
+                                    onClick={() => setEditingStudent(student)}
 
->
+                                >
 
-Edit
+                                    Edit
 
-</button>
+                                </button>
 
-<button
+                                <button
 
-className="btn btn-sm btn-danger"
+                                    className="btn btn-sm btn-danger"
 
-onClick={() => handleDeleteStudent(student.student_id)}
+                                    onClick={() => handleDeleteStudent(student.student_id)}
 
->
+                                >
 
-Delete
+                                    Delete
 
-</button>
+                                </button>
 
-</td>
+                            </td>
 
-</tr>
+                        </tr>
 
-))}
+                    ))}
 
-{students.length === 0 && (
+                    {students.length === 0 && (
 
-<tr>
+                        <tr>
 
-<td colSpan="6" className="text-center">
+                            <td colSpan="6" className="text-center">
 
-No students found.
+                                No students found.
 
-</td>
+                            </td>
 
-</tr>
+                        </tr>
 
-)}
+                    )}
 
-</tbody>
+                </tbody>
 
-</table>
+            </table>
 
-</div>
+        </div>
 
-);
+    );
 
 }
 
