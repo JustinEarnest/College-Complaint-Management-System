@@ -142,12 +142,15 @@ function StudentDashboard() {
     departments.find((d) => d.dept_id === id)?.dept_name || "—";
 
   return (
-    <div className="dashboard-layout">
+    <div className="dashboard-layout container-fluid p-0 d-flex">
       {/* ── Sidebar ── */}
       <aside className="sidebar">
-        <div className="sidebar-brand">
+        <div className="sidebar-brand text-center d-none d-md-block">
           <h2>CCMS</h2>
           <p>Student Portal</p>
+        </div>
+        <div className="sidebar-brand text-center d-md-none py-3">
+          <h2 className="fs-4">CCMS</h2>
         </div>
 
         <nav className="sidebar-nav">
@@ -157,7 +160,7 @@ function StudentDashboard() {
             onClick={() => setActiveTab("submit")}
           >
             <IconDocument />
-            <span>Submit Complaint</span>
+            <span className="d-none d-md-inline ms-2">Submit Complaint</span>
           </button>
 
           <button
@@ -166,162 +169,161 @@ function StudentDashboard() {
             onClick={() => setActiveTab("complaints")}
           >
             <IconClock />
-            <span>My Complaints</span>
+            <span className="d-none d-md-inline ms-2">My Complaints</span>
           </button>
         </nav>
 
         <div className="sidebar-footer">
           <button id="switch-role" className="sidebar-nav-item" onClick={handleSwitchRole}>
             <IconLogout />
-            <span>Logout</span>
+            <span className="d-none d-md-inline ms-2">Logout</span>
           </button>
         </div>
       </aside>
 
       {/* ── Main Content ── */}
-      <main className="main-content">
+      <main className="main-content flex-grow-1 p-3 p-md-4">
 
         {/* ─── Submit Complaint View ─── */}
         {activeTab === "submit" && (
-          <>
-            <div className="page-header">
-              <h1>Submit a Complaint</h1>
-              <p>Fill in the details below to register your complaint</p>
+          <div className="container-fluid max-width-800">
+            <div className="page-header mb-4">
+              <h1 className="h3">Submit a Complaint</h1>
+              <p className="text-primary small mb-0">Fill in the details below to register your complaint</p>
             </div>
 
-            <div className="form-card">
-              {error && <div className="alert-danger-custom">{error}</div>}
-              {success && <div className="alert-success-custom">{success}</div>}
+            <div className="form-card card border-0 shadow-sm p-3 p-md-4">
+              {error && <div className="alert alert-danger py-2 px-3 mb-3">{error}</div>}
+              {success && <div className="alert alert-success py-2 px-3 mb-3">{success}</div>}
 
               <form onSubmit={submitComplaint}>
-                {/* Complaint Title */}
-                <div className="mb-3">
-                  <label className="form-label">Complaint Title</label>
-                  <input
-                    id="complaint-title"
-                    type="text"
-                    className="form-control"
-                    placeholder="Brief title of your complaint"
-                    value={subject}
-                    onChange={(e) => setSubject(e.target.value)}
-                  />
+                <div className="row">
+                  {/* Complaint Title */}
+                  <div className="col-12 mb-3">
+                    <label className="form-label fw-semibold">Complaint Title</label>
+                    <input
+                      id="complaint-title"
+                      type="text"
+                      className="form-control"
+                      placeholder="Brief title of your complaint"
+                      value={subject}
+                      onChange={(e) => setSubject(e.target.value)}
+                    />
+                  </div>
+
+                  {/* Description */}
+                  <div className="col-12 mb-3">
+                    <label className="form-label fw-semibold">Description</label>
+                    <textarea
+                      id="complaint-desc"
+                      className="form-control text-area-custom"
+                      rows="5"
+                      placeholder="Describe your complaint in detail..."
+                      value={description}
+                      onChange={(e) => setDescription(e.target.value)}
+                    />
+                  </div>
+
+                  {/* Date */}
+                  <div className="col-12 mb-4">
+                    <label className="form-label fw-semibold">Date</label>
+                    <input
+                      id="complaint-date"
+                      type="date"
+                      className="form-control"
+                      value={date}
+                      onChange={(e) => setDate(e.target.value)}
+                    />
+                  </div>
+
+                  <div className="col-12">
+                    <button id="btn-submit-complaint" type="submit" className="submit-btn btn btn-primary w-100 py-2 fw-semibold">
+                      {editingId ? "Update Complaint" : "Submit Complaint"}
+                    </button>
+                  </div>
                 </div>
-
-                {/* Department - REMOVED per user request, automatically assigned on backend */}
-
-                {/* Description */}
-                <div className="mb-3">
-                  <label className="form-label">Description</label>
-                  <textarea
-                    id="complaint-desc"
-                    className="form-control"
-                    rows="5"
-                    placeholder="Describe your complaint in detail..."
-                    value={description}
-                    onChange={(e) => setDescription(e.target.value)}
-                  />
-                </div>
-
-                {/* Date */}
-                <div className="mb-4">
-                  <label className="form-label">Date</label>
-                  <input
-                    id="complaint-date"
-                    type="date"
-                    className="form-control"
-                    value={date}
-                    onChange={(e) => setDate(e.target.value)}
-                  />
-                </div>
-
-                <button id="btn-submit-complaint" type="submit" className="submit-btn">
-                  {editingId ? "Update Complaint" : "Submit Complaint"}
-                </button>
               </form>
             </div>
-          </>
+          </div>
         )}
 
         {/* ─── My Complaints View ─── */}
         {activeTab === "complaints" && (
-          <>
-            <div className="page-header">
-              <h1>My Complaints</h1>
-              <p>Track the status of your submitted complaints</p>
+          <div className="container-fluid">
+            <div className="page-header mb-4">
+              <h1 className="h3">My Complaints</h1>
+              <p className="text-primary small mb-0">Track the status of your submitted complaints</p>
             </div>
 
-            <div className="content-card">
-              <table className="ccms-table">
-                <thead>
-                  <tr>
-                    <th>Title</th>
-                    <th>Department</th>
-                    <th>Date</th>
-                    <th>Status</th>
-                    <th>Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {complaints.length === 0 ? (
+            <div className="content-card card border-0 shadow-sm overflow-hidden">
+              <div className="table-responsive-custom">
+                <table className="ccms-table table table-hover mb-0">
+                  <thead className="bg-light">
                     <tr>
-                      <td colSpan="5">
-                        <div className="empty-state">
-                          <IconDocument />
-                          <p>No complaints found.</p>
-                        </div>
-                      </td>
+                      <th className="border-0 px-4 py-3">Title</th>
+                      <th className="border-0 px-4 py-3">Department</th>
+                      <th className="border-0 px-4 py-3">Date</th>
+                      <th className="border-0 px-4 py-3">Status</th>
+                      <th className="border-0 px-4 py-3">Action</th>
                     </tr>
-                  ) : (
-                    complaints.map((c) => (
-                      <tr key={c.complaint_id}>
-                        <td className="complaint-title">{c.subject}</td>
-                        <td className="student-name">
-                          {deptName(c.department)}
-                        </td>
-                        <td className="complaint-date">
-                          {c.created_at
-                            ? new Date(c.created_at).toISOString().split("T")[0]
-                            : "—"}
-                        </td>
-                        <td>
-                          <span className={`status-badge ${statusClass(c.status)}`}>
-                            {c.status || "Pending"}
-                          </span>
-                        </td>
-                        <td className="table-actions">
-                          <button
-                            className="btn-edit"
-                            style={{
-                              backgroundColor: "#4f46e5",
-                              color: "white",
-                              padding: "4px 12px",
-                              borderRadius: "4px",
-                              border: "none",
-                              marginRight: "8px",
-                              cursor: "pointer"
-                            }}
-                            onClick={() => editComplaint(c)}
-                          >
-                            Edit
-                          </button>
-                          <button
-                            className="btn-delete"
-                            onClick={() => deleteComplaint(c.complaint_id)}
-                          >
-                            Delete
-                          </button>
+                  </thead>
+                  <tbody>
+                    {complaints.length === 0 ? (
+                      <tr>
+                        <td colSpan="5" className="p-5">
+                          <div className="empty-state text-center opacity-50">
+                            <IconDocument />
+                            <p className="mt-2 mb-0">No complaints found.</p>
+                          </div>
                         </td>
                       </tr>
-                    ))
-                  )}
-                </tbody>
-              </table>
+                    ) : (
+                      complaints.map((c) => (
+                        <tr key={c.complaint_id}>
+                          <td className="px-4 py-3 complaint-title fw-medium">{c.subject}</td>
+                          <td className="px-4 py-3 student-name text-muted">
+                            {deptName(c.department)}
+                          </td>
+                          <td className="px-4 py-3 complaint-date text-muted">
+                            {c.created_at
+                              ? new Date(c.created_at).toISOString().split("T")[0]
+                              : "—"}
+                          </td>
+                          <td className="px-4 py-3">
+                            <span className={`status-badge px-3 py-1 rounded-pill small fw-bold ${statusClass(c.status)}`}>
+                              {c.status || "Pending"}
+                            </span>
+                          </td>
+                          <td className="px-4 py-3 table-actions">
+                            <div className="d-flex gap-2">
+                              <button
+                                className="btn btn-sm btn-indigo text-white px-3"
+                                style={{ backgroundColor: "#4f46e5" }}
+                                onClick={() => editComplaint(c)}
+                              >
+                                Edit
+                              </button>
+                              <button
+                                className="btn btn-sm btn-outline-danger px-3 btn-delete"
+                                onClick={() => deleteComplaint(c.complaint_id)}
+                              >
+                                Delete
+                              </button>
+                            </div>
+                          </td>
+                        </tr>
+                      ))
+                    )}
+                  </tbody>
+                </table>
+              </div>
             </div>
-          </>
+          </div>
         )}
       </main>
     </div>
   );
+
 }
 
 export default StudentDashboard;

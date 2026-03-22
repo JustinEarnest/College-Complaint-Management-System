@@ -103,182 +103,117 @@ function ManageDepartments() {
 
     return (
 
-        <div>
+        <div className="container-fluid p-0">
+            <h3 className="mb-4 fw-bold">Manage Departments</h3>
 
-            <h3 className="mb-4">Manage Departments</h3>
-
-
-            <div className="card mb-4">
-
-                <div className="card-body">
-
-                    <h5 className="card-title">Add New Department</h5>
-
-                    <form className="d-flex" onSubmit={handleAddDepartment}>
-
-                        <input
-
-                            type="text"
-
-                            className="form-control me-2"
-
-                            placeholder="Department Name"
-
-                            value={newDeptName}
-
-                            onChange={(e) => setNewDeptName(e.target.value)}
-
-                            required
-
-                        />
-
-                        <button type="submit" className="btn btn-primary">
-
-                            Add
-
-                        </button>
-
+            <div className="card mb-4 border-0 shadow-sm">
+                <div className="card-body p-3 p-md-4">
+                    <h5 className="card-title mb-3 fw-bold">Add New Department</h5>
+                    <form onSubmit={handleAddDepartment}>
+                        <div className="row g-2">
+                            <div className="col-12 col-md-9">
+                                <input
+                                    type="text"
+                                    className="form-control"
+                                    placeholder="Department Name"
+                                    value={newDeptName}
+                                    onChange={(e) => setNewDeptName(e.target.value)}
+                                    required
+                                />
+                            </div>
+                            <div className="col-12 col-md-3">
+                                <button type="submit" className="btn btn-primary w-100">
+                                    Add Department
+                                </button>
+                            </div>
+                        </div>
                     </form>
-
                 </div>
-
             </div>
 
-
             {editingDept && (
-
-                <div className="card mb-4">
-
-                    <div className="card-body">
-
-                        <h5 className="card-title">Edit Department</h5>
-
-                        <form className="d-flex" onSubmit={handleEditDepartment}>
-
-                            <input
-
-                                type="text"
-
-                                className="form-control me-2"
-
-                                value={editingDept.dept_name}
-
-                                onChange={(e) =>
-
-                                    setEditingDept({ ...editingDept, dept_name: e.target.value })
-
-                                }
-
-                                required
-
-                            />
-
-                            <button type="submit" className="btn btn-success me-2">
-
-                                Save
-
-                            </button>
-
-                            <button
-
-                                type="button"
-
-                                className="btn btn-secondary"
-
-                                onClick={() => setEditingDept(null)}
-
-                            >
-
-                                Cancel
-
-                            </button>
-
+                <div className="card mb-4 border-0 shadow-sm border-start border-4 border-success">
+                    <div className="card-body p-3 p-md-4">
+                        <h5 className="card-title mb-3 fw-bold">Edit Department</h5>
+                        <form onSubmit={handleEditDepartment}>
+                            <div className="row g-2">
+                                <div className="col-12 col-md-6">
+                                    <input
+                                        type="text"
+                                        className="form-control"
+                                        value={editingDept.dept_name}
+                                        onChange={(e) =>
+                                            setEditingDept({ ...editingDept, dept_name: e.target.value })
+                                        }
+                                        required
+                                    />
+                                </div>
+                                <div className="col-6 col-md-3">
+                                    <button type="submit" className="btn btn-success w-100">
+                                        Save
+                                    </button>
+                                </div>
+                                <div className="col-6 col-md-3">
+                                    <button
+                                        type="button"
+                                        className="btn btn-secondary w-100"
+                                        onClick={() => setEditingDept(null)}
+                                    >
+                                        Cancel
+                                    </button>
+                                </div>
+                            </div>
                         </form>
-
                     </div>
-
                 </div>
-
             )}
 
-
-            <table className="table">
-
-                <thead>
-
-                    <tr>
-
-                        <th>ID</th>
-
-                        <th>Department Name</th>
-
-                        <th>Actions</th>
-
-                    </tr>
-
-                </thead>
-
-                <tbody>
-
-                    {departments.map((dept) => (
-
-                        <tr key={dept.dept_id}>
-
-                            <td>{dept.dept_id}</td>
-
-                            <td>{dept.dept_name}</td>
-
-                            <td>
-
-                                <button
-
-                                    className="btn btn-sm btn-warning me-2"
-
-                                    onClick={() => setEditingDept(dept)}
-
-                                >
-
-                                    Edit
-
-                                </button>
-
-                                <button
-
-                                    className="btn btn-sm btn-danger"
-
-                                    onClick={() => handleDeleteDepartment(dept.dept_id)}
-
-                                >
-
-                                    Delete
-
-                                </button>
-
-                            </td>
-
-                        </tr>
-
-                    ))}
-
-                    {departments.length === 0 && (
-
-                        <tr>
-
-                            <td colSpan="3" className="text-center">
-
-                                No departments found.
-
-                            </td>
-
-                        </tr>
-
-                    )}
-
-                </tbody>
-
-            </table>
-
+            <div className="card border-0 shadow-sm overflow-hidden">
+                <div className="table-responsive-custom">
+                    <table className="table table-hover mb-0">
+                        <thead className="bg-light">
+                            <tr>
+                                <th className="px-4 py-3">ID</th>
+                                <th className="px-4 py-3">Department Name</th>
+                                <th className="px-4 py-3 text-end">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {departments.map((dept) => (
+                                <tr key={dept.dept_id}>
+                                    <td className="px-4 py-3">{dept.dept_id}</td>
+                                    <td className="px-4 py-3 fw-medium">{dept.dept_name}</td>
+                                    <td className="px-4 py-3 text-end">
+                                        <div className="d-flex justify-content-end gap-2">
+                                            <button
+                                                className="btn btn-sm btn-outline-warning"
+                                                onClick={() => setEditingDept(dept)}
+                                            >
+                                                Edit
+                                            </button>
+                                            <button
+                                                className="btn btn-sm btn-outline-danger"
+                                                onClick={() => handleDeleteDepartment(dept.dept_id)}
+                                            >
+                                                Delete
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            ))}
+                            {departments.length === 0 && (
+                                <tr>
+                                    <td colSpan="3" className="text-center p-5 opacity-50">
+                                        No departments found.
+                                    </td>
+                                </tr>
+                            )}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
+
 
     );
 

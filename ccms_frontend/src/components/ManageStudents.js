@@ -179,429 +179,242 @@ function ManageStudents() {
 
     return (
 
-        <div>
+        <div className="container-fluid p-0">
+            <h3 className="mb-4 fw-bold">Manage Students</h3>
 
-            <h3 className="mb-4">Manage Students</h3>
+            {error && <div className="alert alert-danger shadow-sm border-0">{error}</div>}
 
-
-            {error && <div className="alert alert-danger">{error}</div>}
-
-
-            <div className="card mb-4">
-
-                <div className="card-body">
-
-                    <h5 className="card-title">Add New Student</h5>
-
+            <div className="card mb-4 border-0 shadow-sm">
+                <div className="card-body p-3 p-md-4">
+                    <h5 className="card-title mb-3 fw-bold">Add New Student</h5>
                     <form onSubmit={handleAddStudent}>
-
-                        <div className="row mb-3">
-
-                            <div className="col">
-
+                        <div className="row g-3 mb-3">
+                            <div className="col-12 col-md-6">
+                                <label className="form-label small fw-bold">Username</label>
                                 <input
-
                                     type="text"
-
                                     className="form-control"
-
                                     placeholder="Username"
-
                                     value={newStudent.username}
-
                                     onChange={(e) =>
-
                                         setNewStudent({ ...newStudent, username: e.target.value })
-
                                     }
-
                                     required
-
                                 />
-
                             </div>
-
-                            <div className="col">
-
+                            <div className="col-12 col-md-6">
+                                <label className="form-label small fw-bold">Email</label>
                                 <input
-
                                     type="email"
-
                                     className="form-control"
-
                                     placeholder="Email"
-
                                     value={newStudent.email}
-
                                     onChange={(e) =>
-
                                         setNewStudent({ ...newStudent, email: e.target.value })
-
                                     }
-
                                     required
-
                                 />
-
                             </div>
-
                         </div>
-
-                        <div className="row mb-3">
-
-                            <div className="col">
-
+                        <div className="row g-3 mb-3">
+                            <div className="col-12 col-md-6">
+                                <label className="form-label small fw-bold">Password</label>
                                 <input
-
                                     type="password"
-
                                     className="form-control"
-
                                     placeholder="Password"
-
                                     value={newStudent.password}
-
                                     onChange={(e) =>
-
                                         setNewStudent({ ...newStudent, password: e.target.value })
-
                                     }
-
                                     required
-
                                 />
-
                             </div>
-
-                            <div className="col">
-
+                            <div className="col-12 col-md-6">
+                                <label className="form-label small fw-bold">Phone</label>
                                 <input
-
                                     type="text"
-
                                     className="form-control"
-
                                     placeholder="Phone"
-
                                     value={newStudent.phone}
-
                                     onChange={(e) =>
-
                                         setNewStudent({ ...newStudent, phone: e.target.value })
-
                                     }
-
                                     required
-
                                 />
-
                             </div>
-
                         </div>
-
-                        <div className="row mb-3">
-
-                            <div className="col">
-
+                        <div className="row g-3">
+                            <div className="col-12 col-md-6">
+                                <label className="form-label small fw-bold">Department</label>
                                 <select
-
                                     className="form-select"
-
                                     value={newStudent.department}
-
                                     onChange={(e) =>
-
                                         setNewStudent({ ...newStudent, department: e.target.value })
-
                                     }
-
                                     required
-
                                 >
-
                                     <option value="">Select Department</option>
-
                                     {departments.map((dept) => (
-
                                         <option key={dept.dept_id} value={dept.dept_id}>
-
                                             {dept.dept_name}
-
                                         </option>
-
                                     ))}
-
                                 </select>
-
                             </div>
-
-                            <div className="col d-flex align-items-end">
-
-                                <button type="submit" className="btn btn-primary w-100">
-
+                            <div className="col-12 col-md-6 d-flex align-items-end">
+                                <button type="submit" className="btn btn-primary w-100 py-2 fw-bold">
                                     Add Student
-
                                 </button>
-
                             </div>
-
                         </div>
-
                     </form>
-
                 </div>
-
             </div>
 
-
             {editingStudent && (
-
-                <div className="card mb-4">
-
-                    <div className="card-body">
-
-                        <h5 className="card-title">Edit Student</h5>
-
+                <div className="card mb-4 border-0 shadow-sm border-start border-4 border-success">
+                    <div className="card-body p-3 p-md-4">
+                        <h5 className="card-title mb-3 fw-bold">Edit Student</h5>
                         <form onSubmit={handleEditStudent}>
-
-                            <div className="row mb-3">
-
-                                <div className="col">
-
+                            <div className="row g-3 mb-3">
+                                <div className="col-12 col-md-6">
+                                    <label className="form-label small fw-bold">Name</label>
                                     <input
-
                                         type="text"
-
                                         className="form-control"
-
                                         placeholder="Name"
-
                                         value={editingStudent.name}
-
                                         onChange={(e) =>
-
                                             setEditingStudent({ ...editingStudent, name: e.target.value })
-
                                         }
-
                                         required
-
                                     />
-
                                 </div>
-
-                                <div className="col">
-
+                                <div className="col-12 col-md-6">
+                                    <label className="form-label small fw-bold">Email</label>
                                     <input
-
                                         type="email"
-
                                         className="form-control"
-
                                         placeholder="Email"
-
                                         value={editingStudent.email}
-
                                         onChange={(e) =>
-
                                             setEditingStudent({ ...editingStudent, email: e.target.value })
-
                                         }
-
                                         required
-
                                     />
-
                                 </div>
-
                             </div>
-
-                            <div className="row mb-3">
-
-                                <div className="col">
-
+                            <div className="row g-3 mb-3">
+                                <div className="col-12 col-md-6">
+                                    <label className="form-label small fw-bold">Phone</label>
                                     <input
-
                                         type="text"
-
                                         className="form-control"
-
                                         placeholder="Phone"
-
                                         value={editingStudent.phone}
-
                                         onChange={(e) =>
-
                                             setEditingStudent({ ...editingStudent, phone: e.target.value })
-
                                         }
-
                                         required
-
                                     />
-
                                 </div>
-
-                                <div className="col">
-
+                                <div className="col-12 col-md-6">
+                                    <label className="form-label small fw-bold">Department</label>
                                     <select
-
                                         className="form-select"
-
                                         value={editingStudent.department}
-
                                         onChange={(e) =>
-
                                             setEditingStudent({
-
                                                 ...editingStudent,
-
                                                 department: e.target.value,
-
                                             })
-
                                         }
-
                                         required
-
                                     >
-
                                         <option value="">Select Department</option>
-
                                         {departments.map((dept) => (
-
                                             <option key={dept.dept_id} value={dept.dept_id}>
-
                                                 {dept.dept_name}
-
                                             </option>
-
                                         ))}
-
                                     </select>
-
                                 </div>
-
                             </div>
-
-                            <button type="submit" className="btn btn-success me-2">
-
-                                Save
-
-                            </button>
-
-                            <button
-
-                                type="button"
-
-                                className="btn btn-secondary"
-
-                                onClick={() => setEditingStudent(null)}
-
-                            >
-
-                                Cancel
-
-                            </button>
-
+                            <div className="d-flex gap-2">
+                                <button type="submit" className="btn btn-success px-4 fw-bold">
+                                    Save
+                                </button>
+                                <button
+                                    type="button"
+                                    className="btn btn-secondary px-4 fw-bold"
+                                    onClick={() => setEditingStudent(null)}
+                                >
+                                    Cancel
+                                </button>
+                            </div>
                         </form>
-
                     </div>
-
                 </div>
-
             )}
 
-
-            <table className="table">
-
-                <thead>
-
-                    <tr>
-
-                        <th>ID</th>
-
-                        <th>Name</th>
-
-                        <th>Email</th>
-
-                        <th>Phone</th>
-
-                        <th>Department</th>
-
-                        <th>Actions</th>
-
-                    </tr>
-
-                </thead>
-
-                <tbody>
-
-                    {students.map((student) => (
-
-                        <tr key={student.student_id}>
-
-                            <td>{student.student_id}</td>
-
-                            <td>{student.name}</td>
-
-                            <td>{student.email}</td>
-
-                            <td>{student.phone}</td>
-
-                            <td>{getDepartmentName(student.department)}</td>
-
-                            <td>
-
-                                <button
-
-                                    className="btn btn-sm btn-warning me-2"
-
-                                    onClick={() => setEditingStudent(student)}
-
-                                >
-
-                                    Edit
-
-                                </button>
-
-                                <button
-
-                                    className="btn btn-sm btn-danger"
-
-                                    onClick={() => handleDeleteStudent(student.student_id)}
-
-                                >
-
-                                    Delete
-
-                                </button>
-
-                            </td>
-
-                        </tr>
-
-                    ))}
-
-                    {students.length === 0 && (
-
-                        <tr>
-
-                            <td colSpan="6" className="text-center">
-
-                                No students found.
-
-                            </td>
-
-                        </tr>
-
-                    )}
-
-                </tbody>
-
-            </table>
-
+            <div className="card border-0 shadow-sm overflow-hidden">
+                <div className="table-responsive-custom">
+                    <table className="table table-hover mb-0 text-nowrap">
+                        <thead className="bg-light">
+                            <tr>
+                                <th className="px-4 py-3">ID</th>
+                                <th className="px-4 py-3">Name</th>
+                                <th className="px-4 py-3">Email</th>
+                                <th className="px-4 py-3">Phone</th>
+                                <th className="px-4 py-3">Department</th>
+                                <th className="px-4 py-3 text-end">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {students.map((student) => (
+                                <tr key={student.student_id}>
+                                    <td className="px-4 py-3">{student.student_id}</td>
+                                    <td className="px-4 py-3 fw-medium">{student.name}</td>
+                                    <td className="px-4 py-3 text-muted">{student.email}</td>
+                                    <td className="px-4 py-3 text-muted">{student.phone}</td>
+                                    <td className="px-4 py-3">
+                                        <span className="badge bg-light text-dark border fw-normal">
+                                            {getDepartmentName(student.department)}
+                                        </span>
+                                    </td>
+                                    <td className="px-4 py-3 text-end">
+                                        <div className="d-flex justify-content-end gap-2">
+                                            <button
+                                                className="btn btn-sm btn-outline-warning"
+                                                onClick={() => setEditingStudent(student)}
+                                            >
+                                                Edit
+                                            </button>
+                                            <button
+                                                className="btn btn-sm btn-outline-danger"
+                                                onClick={() => handleDeleteStudent(student.student_id)}
+                                            >
+                                                Delete
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            ))}
+                            {students.length === 0 && (
+                                <tr>
+                                    <td colSpan="6" className="text-center p-5 opacity-50">
+                                        No students found.
+                                    </td>
+                                </tr>
+                            )}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
+
 
     );
 

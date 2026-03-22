@@ -41,109 +41,115 @@ function LoginPage() {
   };
 
   return (
-    <div className="login-wrapper">
-      <div className="login-container">
-        {/* Lock Icon */}
-        <div className="login-icon">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={2}
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z"
-            />
-          </svg>
-        </div>
-
-        {/* Title */}
-        <h1 className="login-title">CCMS Login</h1>
-        <p className="login-subtitle">College Complaint Management System</p>
-
-        {/* Login Card */}
-        <div className="login-card">
-          {error && <div className="login-error">{error}</div>}
-
-          <form onSubmit={handleLogin}>
-            {/* Email Field */}
-            <div className="mb-3">
-              <label className="form-label">Email & Username</label>
-              <div className="input-group">
-                <span className="input-icon">
-                  <svg 
-                    xmlns="http://www.w3.org/2000/svg" 
-                    fill="none"
-                    strokeWidth={1.0}
-                    stroke="currentColor"
-                    class="bi bi-person" 
-                    viewBox="0 0 16 16"
-                  >
-                    <path 
-                    d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z"
-                    />
-                  </svg>
-                </span>
-                <input
-                  id="login-email"
-                  type="text"
-                  className="form-control"
-                  placeholder="your@college.edu & Username"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
-                  required
+    <div className="login-wrapper d-flex align-items-center justify-content-center p-3">
+      <div className="container">
+        <div className="row justify-content-center">
+          <div className="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-4 text-center">
+            {/* Lock Icon */}
+            <div className="login-icon mx-auto">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={2}
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z"
                 />
-              </div>
+              </svg>
             </div>
 
-            {/* Password Field */}
-            <div className="mb-3">
-              <label className="form-label">Password</label>
-              <div className="input-group">
-                <span className="input-icon">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth={1.5}
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z"
-                    />
-                  </svg>
-                </span>
-                <input
-                  id="login-password"
-                  type="password"
-                  className="form-control"
-                  placeholder="••••••••"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  required
-                />
-              </div>
-            </div>
+            {/* Title */}
+            <h1 className="login-title">CCMS Login</h1>
+            <p className="login-subtitle">College Complaint Management System</p>
 
-            {/* Sign In Button */}
-            <button
-              id="login-submit"
-              type="submit"
-              className="login-btn"
-              disabled={loading}
-            >
-              {loading ? "Signing in..." : "Sign In"}
-            </button>
-          </form>
+            {/* Login Card */}
+            <div className="login-card text-start">
+              {error && <div className="login-error alert alert-danger py-2 px-3 mb-3">{error}</div>}
+
+              <form onSubmit={handleLogin}>
+                {/* Email Field */}
+                <div className="mb-3">
+                  <label className="form-label fw-semibold">Email & Username</label>
+                  <div className="input-group">
+                    <span className="input-group-text bg-light border-end-0">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        strokeWidth={1.5}
+                        stroke="currentColor"
+                        width="18"
+                        height="18"
+                        viewBox="0 0 24 24"
+                      >
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+                      </svg>
+                    </span>
+                    <input
+                      id="login-email"
+                      type="text"
+                      className="form-control border-start-0 ps-0 pe-3"
+                      placeholder="your@college.edu & Username"
+                      value={username}
+                      onChange={(e) => setUsername(e.target.value)}
+                      required
+                    />
+                  </div>
+                </div>
+
+                {/* Password Field */}
+                <div className="mb-3">
+                  <label className="form-label fw-semibold">Password</label>
+                  <div className="input-group">
+                    <span className="input-group-text bg-light border-end-0">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth={1.5}
+                        stroke="currentColor"
+                        width="18"
+                        height="18"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z"
+                        />
+                      </svg>
+                    </span>
+                    <input
+                      id="login-password"
+                      type="password"
+                      className="form-control border-start-0 ps-0 pe-3"
+                      placeholder="••••••••"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      required
+                    />
+                  </div>
+                </div>
+
+                {/* Sign In Button */}
+                <button
+                  id="login-submit"
+                  type="submit"
+                  className="login-btn w-100"
+                  disabled={loading}
+                >
+                  {loading ? "Signing in..." : "Sign In"}
+                </button>
+              </form>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   );
+
 }
 
 export default LoginPage;

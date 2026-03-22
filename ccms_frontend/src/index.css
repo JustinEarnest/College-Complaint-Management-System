@@ -70,17 +70,7 @@ a { text-decoration: none; }
 
 .login-wrapper {
   min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   background: var(--bg-main);
-  padding: 20px;
-}
-
-.login-container {
-  width: 100%;
-  max-width: 440px;
-  text-align: center;
 }
 
 .login-icon {
@@ -128,12 +118,6 @@ a { text-decoration: none; }
   border: 1px solid var(--border-color);
   margin-bottom: 16px;
   text-align: left;
-  animation: slideUp 0.5s ease-out;
-}
-
-@keyframes slideUp {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
 }
 
 .login-card .form-label {
@@ -161,25 +145,9 @@ a { text-decoration: none; }
   height: 18px;
 }
 
-.login-card .form-control {
-  height: 48px;
-  border: 1.5px solid var(--border-color);
-  border-radius: var(--border-radius-sm);
-  padding-left: 44px;
-  font-size: 14px;
-  color: var(--text-primary);
-  background-color: var(--bg-main);
-  transition: var(--transition);
-}
-
-.login-card .form-control::placeholder {
-  color: var(--text-secondary);
-}
-
 .login-card .form-control:focus {
   border-color: var(--primary);
   box-shadow: 0 0 0 3px var(--primary-light);
-  background-color: var(--bg-white);
 }
 
 .login-btn {
@@ -495,6 +463,12 @@ a { text-decoration: none; }
   border: 1px solid var(--border-color);
   overflow: hidden;
   animation: fadeIn 0.5s ease-out 0.3s both;
+}
+
+/* Custom Table Responsive Wrapper */
+.table-responsive-custom {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .content-card-header {
