@@ -52,12 +52,17 @@ function StudentDashboard() {
   /* form state */
   const [subject, setSubject] = useState("");
   const [description, setDescription] = useState("");
+  const [priority, setPriority] = useState("Medium");
+  const [category, setCategory] = useState("Academic");
+  const [customCategory, setCustomCategory] = useState("");
+  const [showCustomCategory, setShowCustomCategory] = useState(false);
   const [date, setDate] = useState(
     new Date().toISOString().split("T")[0]
   );
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [editingId, setEditingId] = useState(null);
+
 
   useEffect(() => {
     fetchComplaints();
@@ -94,6 +99,8 @@ function StudentDashboard() {
       const data = {
         subject,
         description,
+        priority,
+        category: showCustomCategory ? customCategory : category,
       };
 
       if (editingId) {
@@ -106,6 +113,10 @@ function StudentDashboard() {
 
       setSubject("");
       setDescription("");
+      setPriority("Medium");
+      setCategory("Academic");
+      setCustomCategory("");
+      setShowCustomCategory(false);
       setEditingId(null);
       setDate(new Date().toISOString().split("T")[0]);
       fetchComplaints();
@@ -113,13 +124,18 @@ function StudentDashboard() {
       setError(`Failed to ${editingId ? "update" : "submit"} complaint. Please try again.`);
       console.error(err);
     }
+
   };
 
   const editComplaint = (complaint) => {
     setEditingId(complaint.complaint_id);
     setSubject(complaint.subject);
     setDescription(complaint.description);
+    setPriority(complaint.priority || "Medium");
+    setCategory(complaint.category || "Academic");
+    setShowCustomCategory(false);
     setActiveTab("submit");
+
     setSuccess("");
     setError("");
   };
@@ -136,10 +152,6 @@ function StudentDashboard() {
     localStorage.removeItem("role");
     window.location.href = "/";
   };
-
-  /* dept name lookup */
-  const deptName = (id) =>
-    departments.find((d) => d.dept_id === id)?.dept_name || "—";
 
   return (
     <div className="dashboard-layout container-fluid p-0 d-flex">
@@ -224,6 +236,55 @@ function StudentDashboard() {
                     />
                   </div>
 
+                  {/* Priority and Category */}
+                  <div className="col-12 col-md-6 mb-3">
+                    <label className="form-label fw-semibold">Priority</label>
+                    <select
+                      className="form-select"
+                      value={priority}
+                      onChange={(e) => setPriority(e.target.value)}
+                    >
+                      <option value="Low">Low</option>
+                      <option value="Medium">Medium</option>
+                      <option value="High">High</option>
+                    </select>
+                  </div>
+
+                  <div className="col-12 col-md-6 mb-3">
+                    <label className="form-label fw-semibold">Category</label>
+                    <select
+                      className="form-select"
+                      value={showCustomCategory ? "Other" : category}
+                      onChange={(e) => {
+                        if (e.target.value === "Other") {
+                          setShowCustomCategory(true);
+                        } else {
+                          setShowCustomCategory(false);
+                          setCategory(e.target.value);
+                        }
+                      }}
+                    >
+                      <option value="Academic">Academic</option>
+                      <option value="Hostel">Hostel</option>
+                      <option value="Infrastructure">Infrastructure</option>
+                      <option value="Technical">Technical</option>
+                      <option value="Other">Other (Add New)</option>
+                    </select>
+                  </div>
+
+                  {showCustomCategory && (
+                    <div className="col-12 mb-3">
+                      <label className="form-label fw-semibold">Custom Category Name</label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        placeholder="Enter new category name..."
+                        value={customCategory}
+                        onChange={(e) => setCustomCategory(e.target.value)}
+                      />
+                    </div>
+                  )}
+
                   {/* Date */}
                   <div className="col-12 mb-4">
                     <label className="form-label fw-semibold">Date</label>
@@ -235,6 +296,7 @@ function StudentDashboard() {
                       onChange={(e) => setDate(e.target.value)}
                     />
                   </div>
+
 
                   <div className="col-12">
                     <button id="btn-submit-complaint" type="submit" className="submit-btn btn btn-primary w-100 py-2 fw-semibold">
@@ -260,11 +322,13 @@ function StudentDashboard() {
                 <table className="ccms-table table table-hover mb-0">
                   <thead className="bg-light">
                     <tr>
-                      <th className="border-0 px-4 py-3">Title</th>
-                      <th className="border-0 px-4 py-3">Department</th>
+                       <th className="border-0 px-4 py-3">Title</th>
+                      <th className="border-0 px-4 py-3">Category</th>
+                      <th className="border-0 px-4 py-3">Priority</th>
                       <th className="border-0 px-4 py-3">Date</th>
                       <th className="border-0 px-4 py-3">Status</th>
                       <th className="border-0 px-4 py-3">Action</th>
+
                     </tr>
                   </thead>
                   <tbody>
@@ -281,8 +345,11 @@ function StudentDashboard() {
                       complaints.map((c) => (
                         <tr key={c.complaint_id}>
                           <td className="px-4 py-3 complaint-title fw-medium">{c.subject}</td>
-                          <td className="px-4 py-3 student-name text-muted">
-                            {deptName(c.department)}
+                          <td className="px-4 py-3 text-muted">{c.category || "General"}</td>
+                          <td className="px-4 py-3">
+                            <span className={`badge ${c.priority === 'High' ? 'bg-danger' : c.priority === 'Medium' ? 'bg-warning text-dark' : 'bg-info text-dark'}`}>
+                              {c.priority || "Medium"}
+                            </span>
                           </td>
                           <td className="px-4 py-3 complaint-date text-muted">
                             {c.created_at
@@ -294,6 +361,7 @@ function StudentDashboard() {
                               {c.status || "Pending"}
                             </span>
                           </td>
+
                           <td className="px-4 py-3 table-actions">
                             <div className="d-flex gap-2">
                               <button
